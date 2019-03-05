@@ -1,7 +1,7 @@
 package akademia.service;
 
 import akademia.model.CustomUserDetails;
-import akademia.model.Users;
+import akademia.model.UserApp;
 import akademia.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,9 +20,9 @@ public class CustomUserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-        Optional<Users> usersOptional = userRepository.findUserByName(username);
+        Optional<UserApp> usersOptional = userRepository.findUserByLogin(login);
         usersOptional.orElseThrow(() -> new UsernameNotFoundException("User not find"));
 
         return usersOptional.map(CustomUserDetails::new).get();

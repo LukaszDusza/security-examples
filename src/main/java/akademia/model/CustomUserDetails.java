@@ -5,15 +5,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CustomUserDetails extends Users implements UserDetails {
+public class CustomUserDetails extends UserApp implements UserDetails {
 
-    public CustomUserDetails() {
-    }
-
-    public CustomUserDetails(Users users) {
-        super(users);
+    public CustomUserDetails(UserApp userApp) {
+        super(userApp);
     }
 
     @Override
@@ -26,9 +24,8 @@ public class CustomUserDetails extends Users implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getName();
+        return super.getLogin(); //login auth
     }
-
 
     @Override
     public String getPassword() {
@@ -54,4 +51,6 @@ public class CustomUserDetails extends Users implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

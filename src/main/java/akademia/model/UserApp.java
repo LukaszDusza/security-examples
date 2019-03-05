@@ -4,39 +4,48 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
-public class Users {
+@Table(name = "user", schema = "public")
+public class UserApp {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
+
     @Column(name = "email")
     private String email;
+
+    @Column(name = "login")
+    private String login;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "active")
     private int active;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public Users() {
+
+    public UserApp(UserApp userApp) {
+        this.email = userApp.getEmail();
+        this.login = userApp.getLogin();
+        this.password = userApp.password;
+        this.name = userApp.getName();
+        this.lastName = userApp.getLastName();
+        this.active = userApp.getActive();
+        this.roles = userApp.getRoles();
     }
 
-    public Users(Users users) {
-        this.active = users.getActive();
-        this.email = users.getEmail();
-        this.roles = users.getRoles();
-        this.name = users.getName();
-        this.lastName =users.getLastName();
-        this.id = users.getId();
-        this.password = users.getPassword();
-    }
+    public UserApp() { }
 
     public int getId() {
         return id;
@@ -52,6 +61,14 @@ public class Users {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {

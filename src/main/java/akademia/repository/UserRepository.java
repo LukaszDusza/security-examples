@@ -1,6 +1,6 @@
 package akademia.repository;
 
-import akademia.model.Users;
+import akademia.model.UserApp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users,Integer> {
+public interface UserRepository extends JpaRepository<UserApp,Integer> {
 
-    @Query(value = "select * from user where name = ?1", nativeQuery = true)
-    Optional<Users> findUserByName(String username);
+
+    @Query(value = "select u from UserApp u where u.login = ?1") //JPQL
+    Optional<UserApp> findUserByLogin(String login);
 }

@@ -1,22 +1,28 @@
 package akademia.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private int roleId;
 
     @Column(name = "role")
     private String role;
 
-    public Role() {
-    }
+    @JsonIgnore
+    @ManyToMany(mappedBy="roles")
+    private Set<UserApp> users = new HashSet<>();
+
 
     public int getRoleId() {
         return roleId;
@@ -32,5 +38,13 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Set<UserApp> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserApp> users) {
+        this.users = users;
     }
 }
